@@ -11,6 +11,11 @@ import Clients from "./pages/Clients";
 import CreateProposal from "./pages/CreateProposal";
 import NotFound from "./pages/NotFound";
 
+// New pages to be implemented
+import Projects from "./pages/Projects";
+import Onboarding from "./pages/Onboarding";
+import CreateOnboarding from "./pages/CreateOnboarding";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -22,9 +27,21 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          
+          {/* Proposal Routes */}
           <Route path="/proposals" element={<Proposals />} />
-          <Route path="/clients" element={<Clients />} />
           <Route path="/create-proposal" element={<CreateProposal />} />
+          
+          {/* Client Routes */}
+          <Route path="/clients" element={<Clients />} />
+          
+          {/* Project Routes */}
+          <Route path="/projects" element={<Projects />} />
+          
+          {/* Onboarding Routes */}
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/create-onboarding" element={<CreateOnboarding />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
