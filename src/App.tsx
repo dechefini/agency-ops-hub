@@ -10,6 +10,7 @@ import Proposals from "./pages/Proposals";
 import Clients from "./pages/Clients";
 import CreateProposal from "./pages/CreateProposal";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
 
 // New pages to be implemented
 import Projects from "./pages/Projects";
@@ -26,6 +27,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           
           {/* Proposal Routes */}

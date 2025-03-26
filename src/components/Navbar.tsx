@@ -1,13 +1,14 @@
 
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Mock auth state
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -23,6 +24,14 @@ export default function Navbar() {
       }
     };
 
+    // Check if user is logged in (this is a mock)
+    // In a real app, you would check with Supabase auth or similar
+    const checkAuth = () => {
+      const hasSession = localStorage.getItem("isLoggedIn") === "true";
+      setIsLoggedIn(hasSession);
+    };
+
+    checkAuth();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -76,9 +85,18 @@ export default function Navbar() {
           <div className="flex items-center space-x-2">
             <ThemeToggle />
             <div className="hidden md:block">
-              <Button asChild size="sm" className="ml-2">
-                <Link to="/create-proposal">Create Proposal</Link>
-              </Button>
+              {isLoggedIn ? (
+                <Button asChild size="sm" className="ml-2">
+                  <Link to="/create-proposal">Create Proposal</Link>
+                </Button>
+              ) : (
+                <Button asChild size="sm" className="ml-2">
+                  <Link to="/login" className="flex items-center gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Login
+                  </Link>
+                </Button>
+              )}
             </div>
             
             {/* Mobile menu button */}
@@ -124,11 +142,20 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="pt-2">
-            <Button asChild size="sm" className="w-full">
-              <Link to="/create-proposal" onClick={() => setIsMenuOpen(false)}>
-                Create Proposal
-              </Link>
-            </Button>
+            {isLoggedIn ? (
+              <Button asChild size="sm" className="w-full">
+                <Link to="/create-proposal" onClick={() => setIsMenuOpen(false)}>
+                  Create Proposal
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild size="sm" className="w-full">
+                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-center gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Login
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>
